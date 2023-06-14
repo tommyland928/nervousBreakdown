@@ -1,0 +1,21 @@
+version: '3'
+services:
+  ner:
+    image: python:latest
+    restart: always
+    ports:
+      - 8000:8000
+    tty: true
+    volumes:
+      - ./app:/home/python/app
+    command: >
+      sh -c "
+      cd /home/python/app &&
+      pip install PyMySQL &&
+      python -m http.server --cgi
+      "
+
+  db:
+    build: ./mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: pwd

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='UTF-8'>
+        <script>
+            window.location.href = "http://192.168.11.140:8000/cgi-bin/index.py"
+        </script>
+	</head>
+
+	<body>
+		<h1>ポーカー対戦</h1>
+		<h2>名前を入力してください</h2>
+		<form action="/cgi-bin/checkName.py" method="POST">
+			<input type="text" name="name"/>
+			<input type="submit" name="submit"/>
+		</form>
+		<div id="test"></div>
+	</body>
+</html>

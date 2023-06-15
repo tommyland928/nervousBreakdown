@@ -79,3 +79,17 @@ img{
     background: #cbe8fa;
     cursor: pointer;
 }
+
+#score{
+    font-size: 30px;
+    text-align: center;
+}
+
+#winner{
+    font-size: 100px;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    width:100%;
+    height: auto;
+}

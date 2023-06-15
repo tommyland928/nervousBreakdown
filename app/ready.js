@@ -1,5 +1,5 @@
 const btn = document.querySelector('.readyBtn');
-const url = 'http://192.168.11.140:8000/cgi-bin/ready.py';
+const url = '/cgi-bin/ready.py';
 
 const postFetch = () => {
     fetch(url, {
@@ -12,6 +12,8 @@ const postFetch = () => {
         return response.json();
     }).then((data)  => {
         //console.log(data);
+        document.getElementById("clicked").setAttribute("type","hidden")
+        document.getElementById("score").innerHTML = "対戦待ち"
     }).catch((error) => {
         console.log(error);
     });

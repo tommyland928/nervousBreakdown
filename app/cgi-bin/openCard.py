@@ -9,16 +9,23 @@ import string
 import datetime
 import os
 import json 
+import urllib.parse
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 connection = pymysql.connect(host='db',user='root',password='pwd',db='nur')
 
 cookieString = os.environ['HTTP_COOKIE']
-cookiesStringList = cookieString.split(';')
 cookieDic = {}
-for i in cookiesStringList:
-    tmp = i.split('=')
-    cookieDic[tmp[0].replace(' ','')] = tmp[1] 
+if cookieString != "":
+    cookiesStringList = cookieString.split(';')
+    
+    for i in cookiesStringList:
+        tmp = i.split('=')
+        cookieDic[tmp[0].replace(' ','')] = tmp[1] 
+else:
+    cookieDic["name"] = ""
+    cookieDic["sessid"] = ""
+
 
 #冒頭のhtmlメッセージのみ送信
 html = """Content-Type: text/html

@@ -7,6 +7,7 @@ import pymysql
 import random
 import string
 import datetime
+import urllib.parse
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
@@ -19,7 +20,8 @@ for x in range(number_of_strings):
 
 #POTSされた値を格納
 form = cgi.FieldStorage()
-formName = form.getvalue('name')
+formNameBeforeEncoding = form.getvalue('name')
+formName = urllib.parse.quote(formNameBeforeEncoding)
 
 connection = pymysql.connect(host='db',user='root',password='pwd',db='nur')
 
@@ -75,7 +77,7 @@ try:
         sql = f"insert into users (name,sessid,ready) values ('{formName}','{sendCookie}',0)"
         cursor.execute(sql)
         connection.commit()
-
+    
         #SSIDを払い出し
         html = f"""<html>
           <head>

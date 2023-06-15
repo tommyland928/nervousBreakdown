@@ -28,7 +28,6 @@ html = """Content-Type: text/html
                 <img src = "/img/reverse.png" id="i03">
                 <img src = "/img/reverse.png" id="i04">
                 <img src = "/img/reverse.png" id="i05">
-
             </div>
             <div id="second">
                 <img src = "/img/reverse.png" id="i10">
@@ -54,10 +53,12 @@ html = """Content-Type: text/html
                 <img src = "/img/reverse.png" id="i34">
                 <img src = "/img/reverse.png" id="i35">
             </div>
+            <div id="score"></div>
+            
         </div>
         <div id="ready">
             <form class="readyFetch">
-                <input type="button" value="Ready" class="readyBtn">      
+                <input type="button" value="Ready" class="readyBtn" id="clicked">      
             </form>
         </div>
         <div hidden>
@@ -116,6 +117,8 @@ html = """Content-Type: text/html
             <img src = "/img/back.png">
             <img src = "/img/jorker.png">
         </div>
+        <div id="winner"></div>
+
         <script src="/battle.js" defer></script>
         <script src="/ready.js" defer></script>
         <script src="/clickCard.js" defer></script>

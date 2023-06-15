@@ -12,13 +12,14 @@ document.querySelectorAll("img").forEach((imgElm) =>{
         form.append('row', row);
         form.append('column', column);
 
-        fetch("http://192.168.11.140:8000/cgi-bin/openCard.py", {
+        fetch("/cgi-bin/openCard.py", {
             method: 'POST',
             body: form
         }).then((response) => {
             if(!response.ok) {
                 console.log('error!');
             } 
+            
             //console.log('ok!');
             return response.json();
         }).then((data)  => {

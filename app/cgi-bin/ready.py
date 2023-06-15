@@ -5,15 +5,22 @@ import io
 import pymysql
 import time
 import os
+import urllib.parse
 
 connection = pymysql.connect(host='db',user='root',password='pwd',db='nur')
 ###クッキー情報を辞書型に変換 cookieDic###
 cookieString = os.environ['HTTP_COOKIE']
-cookiesStringList = cookieString.split(';')
 cookieDic = {}
-for i in cookiesStringList:
-    tmp = i.split('=')
-    cookieDic[tmp[0].replace(' ','')] = tmp[1] 
+if cookieString != "":
+    cookiesStringList = cookieString.split(';')
+    
+    for i in cookiesStringList:
+        tmp = i.split('=')
+        cookieDic[tmp[0].replace(' ','')] = tmp[1] 
+else:
+    cookieDic["name"] = ""
+    cookieDic["sessid"] = ""
+
 ########################################
 
 html_body = """Content-Type: text/html

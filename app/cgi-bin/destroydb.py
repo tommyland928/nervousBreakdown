@@ -8,6 +8,9 @@ import random
 import string
 
 connection = pymysql.connect(host='db',user='root',password='pwd',db='nur')
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+print("Content-Type: text/html")
+print()
 
 try:
     with connection.cursor() as cursor:
@@ -17,7 +20,7 @@ try:
         sql3 = "delete from clovers"
         sql4 = "delete from spades"
         sql5 = "update rooms set phase=0"
-        sql6 = "upddate users set ready=0"
+        sql6 = "update users set ready=0"
         
         cursor.execute(sql)
         connection.commit()

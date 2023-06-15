@@ -1,15 +1,14 @@
+
 var befTableCard = [[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]]];
 window.addEventListener('DOMContentLoaded', function(){
     setInterval(() => {
-        fetch('http://192.168.11.140:8000/cgi-bin/battleInfo.py')
+        fetch('/cgi-bin/battleInfo.py')
         .then(response => {
         return response.json()
         })
         .then(data => {
-            console.log(data);
+            //カードの画像を更新
             tableCard = data["tableCard"];
-            console.log(befTableCard);
-            console.log(tableCard);
             if (befTableCard != tableCard.toString()){
                 console.log("do");
                 for (var i=0; i<4; i++){
@@ -40,6 +39,35 @@ window.addEventListener('DOMContentLoaded', function(){
                 }
             }
             befTableCard = tableCard;
+
+            //scoreを表示
+            get = data["get"]
+            member = data["member"]
+            for(var i=0;i<member.length;i++){
+                member[i] = decodeURI(member[i])
+            }
+            if(get[0] != 0 || get[1] != 0){
+                this.name[1]  
+            }
+            if(member != ""){
+                this.document.getElementById("winner").innerHTML = ""
+                this.document.getElementById("score").innerHTML = member[0] + ": " + get[0] + "枚 " + member[1] + ": " + get[1] + "枚"
+            }
+           
+
+            //勝者情報があれば更新
+            if(data["winner"] != ""){
+                //真ん中に勝者を表示
+                this.document.getElementById("winner").innerHTML = "勝者: " + data["winner"]
+                
+                this.document.getElementById("clicked").setAttribute("type","button")
+
+
+            }
+
+
+
+
         })
         .catch(error => {
             console.log(error);

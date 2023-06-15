@@ -7,6 +7,7 @@ import random
 import string
 import datetime
 import os
+import urllib.parse
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 connection = pymysql.connect(host='db',user='root',password='pwd',db='nur')
@@ -22,6 +23,7 @@ if cookieString != "":
 else:
     cookieDic["name"] = ""
     cookieDic["sessid"] = ""
+
 
 #冒頭のhtmlメッセージのみ送信
 print("Content-Type: text/html")

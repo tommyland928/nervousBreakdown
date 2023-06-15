@@ -7,7 +7,7 @@ import cgitb
 import pymysql
 import time
 import json
-
+import urllib.parse
 import os
 
 
@@ -15,12 +15,20 @@ import os
 cgitb.enable()
 connection = pymysql.connect(host='db',user='root',password='pwd',db='nur')
 ###クッキー情報を辞書型に変換 cookieDic###
+
 cookieString = os.environ['HTTP_COOKIE']
-cookiesStringList = cookieString.split(';')
 cookieDic = {}
-for i in cookiesStringList:
-    tmp = i.split('=')
-    cookieDic[tmp[0].replace(' ','')] = tmp[1] 
+if cookieString != "":
+    cookiesStringList = cookieString.split(';')
+    
+    for i in cookiesStringList:
+        tmp = i.split('=')
+        cookieDic[tmp[0].replace(' ','')] = tmp[1] 
+else:
+    cookieDic["name"] = ""
+    cookieDic["sessid"] = ""
+
+cookieDic["name"] = urllib.parse.unquote(cookieDic["name"])
 ########################################
 
 html_body = """Content-Type: text/html
@@ -34,11 +42,12 @@ print(html_body)
 
 try:
     with connection.cursor() as cursor:
-        list1 = [[1,2]]
-        list1Json = json.dumps(list1)
-        sql = f"UPDATE battles set openCard='{list1Json}'"
+        sql = "select member from battles"
         cursor.execute(sql)
-        connection.commit()
+        result = cursor.fetchone()
+        member = json.loads(result[0])
+        print(member[1])
+
 finally:
     connection.close()
 

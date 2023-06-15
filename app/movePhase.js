@@ -1,6 +1,6 @@
 window.addEventListener('DOMContentLoaded', function(){
     setInterval(() => {
-        fetch('http://192.168.11.140:8000/cgi-bin/movePhase.py')
+        fetch('/cgi-bin/movePhase.py')
         .then(response => {
         return response.json()
     })

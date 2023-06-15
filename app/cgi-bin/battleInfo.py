@@ -8,7 +8,7 @@ import string
 import datetime
 import os
 import json 
-
+import urllib.parse
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 connection = pymysql.connect(host='db',user='root',password='pwd',db='nur')
@@ -75,6 +75,10 @@ try:
                 winner = i[5]
 
             member = json.loads(memberJson)
+            #for i in range(0,len(member)):
+               # tmp = urllib.parse.unquote(member[i])
+                #member[i] = tmp
+                
             get = json.loads(getJson)
             tableCard = json.loads(tableCardJson)
             openCard = json.loads(openCardJson)

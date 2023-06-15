@@ -85,7 +85,7 @@ try:
             <script>
               document.cookie = 'name={formName}; path=/;'
               document.cookie = 'sessid={sendCookie}; path=/;'
-              window.location.href = 'http://192.168.11.140:8000/cgi-bin/battle.py';
+              window.location.href = '/cgi-bin/battle.py';
             </script>
           </head>
           <body>

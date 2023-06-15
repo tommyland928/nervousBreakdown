@@ -57,7 +57,7 @@ try:
                     <head>
                         <meta charset='UTF-8'>
                         <script>
-                            window.location.href = "http://192.168.11.140:8000/cgi-bin/battle.py"
+                            window.location.href = "/cgi-bin/battle.py"
                         </script>
                     </head>
                     <body>

@@ -19,7 +19,7 @@ window.addEventListener('DOMContentLoaded', function(){
                             var num = card[1];
                             
                             var id = "i"+i+j;
-                            var img = "/img/";
+                            var img = "/reverseImg/";
                             if (suit == -1){//-1になったらカードを取られたってこと
                                 img += "back.png";
                             }else if (suit == 0){
@@ -33,7 +33,11 @@ window.addEventListener('DOMContentLoaded', function(){
                             }else if (suit == 4){
                                 img += "d/"+num+".png";
                             }
-                            this.document.getElementById(id).setAttribute('src',img);
+                            //this.document.getElementById(id).setAttribute('src',img);
+                            var isBack = true;
+                            let image = isBack ? img : '/reverseImg/back.png';
+                            rotationAnimationLoop(document.getElementById(id), image, 0);
+                            isBack = !isBack;
                         }
                     }
                 }
@@ -74,3 +78,27 @@ window.addEventListener('DOMContentLoaded', function(){
         })
     }, 1000);//msで指定　1000ms=1s
 });
+
+
+const rotationAnimationLoop = (element, imagePath, deg) =>{
+    if( deg <= 180 ){
+        console.log("kpokpeorkagarg")
+        rotationAnimation(element, imagePath, deg);
+        setTimeout( 
+            () => {
+                rotationAnimationLoop(element, imagePath, deg+= 5 ) 
+            }, 
+        1 );
+    }
+}
+
+const rotationAnimation = (element, imagePath, deg) =>{
+    if ( 90 === deg ){
+        element.src =  imagePath;
+    }else {
+        element.style.webkitTransform = 'rotateY(' + deg + 'deg)';
+    }
+}
+
+
+

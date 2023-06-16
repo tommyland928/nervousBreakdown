@@ -1,0 +1,3 @@
+apiの登録方法
+①ファイルapiKey.pyを作成。
+②apiKey = "<API KEY>"の形でline message API を変数として格納する

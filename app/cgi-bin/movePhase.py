@@ -9,6 +9,7 @@ import datetime
 import os
 import json
 import urllib.parse
+import linemes
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 connection = pymysql.connect(host='db',user='root',password='pwd',db='nur')
@@ -145,6 +146,7 @@ try:
                 getJson = i[3]
 
             member = json.loads(memberJson)
+
             get = json.loads(getJson)
             if get[0]+get[1] == 24:
                 #試合終了
@@ -186,6 +188,10 @@ try:
                 sql = "delete from clovers"
                 cursor.execute(sql)
                 connection.commit()
+
+                #ラインにメッセージを送信　
+                #遊んでくれた時に自分にメッセージを送る
+                linemes.mes(member)
 
 finally:
     connection.close()

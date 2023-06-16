@@ -12,6 +12,7 @@ services:
       sh -c "
       cd /home/python/app &&
       pip install PyMySQL &&
+      pip install requests &&
       python -m http.server --cgi
       "
 

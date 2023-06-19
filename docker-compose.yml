@@ -20,3 +20,4 @@ services:
     build: ./mariadb
     environment:
       MYSQL_ROOT_PASSWORD: pwd
+      TZ: Asia/Tokyo

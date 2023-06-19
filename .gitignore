@@ -1,1 +1,2 @@
 app/cgi-bin/apikey.py
+app/cgi-bin/destroydb.py

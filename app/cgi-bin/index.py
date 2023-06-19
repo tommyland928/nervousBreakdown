@@ -3,14 +3,18 @@
 import sys
 import io
 import pymysql
-import random
-import string
 import datetime
 import os
-import urllib.parse
+import OperateDb
+import cgitb
+
+cgitb.enable()
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 connection = pymysql.connect(host='db',user='root',password='pwd',db='nur')
+operateDb = OperateDb.OperateDb()
+operateDb.removeNoSessionUser()
+operateDb.removeBattle()
 
 cookieString = os.environ['HTTP_COOKIE']
 cookieDic = {}
@@ -69,15 +73,22 @@ try:
             html = """<html>
 	            <head>
 	                <meta charset='UTF-8'>
+                    <link rel="stylesheet" href="/index.css">
                 </head>
                 <body>
-                    <h1>ポーカー対戦</h1>
-                     <h2>名前を入力してください</h2>
-                    <form action="/cgi-bin/checkName.py" method="POST">
-                        <input type="text" name="name"/>
-                        <input type="submit" name="submit"/>
-                    </form>
-                    <div id="test"></div>
+                    <div id="contents">
+                        <div id="flexbox">
+                            <h1>神経衰弱対戦</h1>
+                            <h2>名前を入力してください</h2>
+                            <div id="inputName">
+                                <form action="/cgi-bin/checkName.py" method="POST">
+                                    <input type="text" name="name"/>
+                                    <input type="submit" name="submit"/>
+                                </form>
+                            </div>
+                            <div id="test"></div>
+                        </div>
+                    </div>
                 </body>
             </html>
             """

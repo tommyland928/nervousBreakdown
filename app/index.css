@@ -1,0 +1,18 @@
+h1{
+    text-align: center;
+}
+
+h2{
+    text-align: center;
+}
+
+#inputName{
+    text-align: center;
+}
+
+#contents{
+    display: flex;
+    flex-flow: column;
+    align-items: center
+
+}

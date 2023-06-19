@@ -2,13 +2,8 @@
 
 import sys
 import io
-import pymysql
-import random
-import string
-import datetime
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
-connection = pymysql.connect(host='db',user='root',password='pwd',db='nur')
 
 #冒頭のhtmlメッセージのみ送信
 

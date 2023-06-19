@@ -74,8 +74,11 @@ try:
           break
       else:#一致が無かったとき
         #データベースに登録
-        sql = f"insert into users (name,sessid,ready) values ('{formName}','{sendCookie}',0)"
-        cursor.execute(sql)
+        JST = datetime.timezone(datetime.timedelta(hours=+9),'JST')
+        JSTnow = datetime.datetime.now(JST)
+        now = JSTnow.strftime("%Y-%m-%d %H:%M:%S")
+        sql = f"insert into users (name,sessid,ready,lastuse) values (%s,'{sendCookie}',0,'{now}')"
+        cursor.execute(sql,formName)
         connection.commit()
     
         #SSIDを払い出し

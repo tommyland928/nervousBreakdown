@@ -2,10 +2,7 @@
 
 import sys
 import io
-import cgi
 import pymysql
-import random
-import string
 
 connection = pymysql.connect(host='db',user='root',password='pwd',db='nur')
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')

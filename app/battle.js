@@ -76,7 +76,7 @@ window.addEventListener('DOMContentLoaded', function(){
         .catch(error => {
             console.log(error);
         })
-    }, 1000);//msで指定　1000ms=1s
+    }, 300);//msで指定　1000ms=1s
 });
 
 

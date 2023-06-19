@@ -3,12 +3,9 @@
 import sys
 import io
 import pymysql
-import random
-import string
 import datetime
 import os
 import json 
-import urllib.parse
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 connection = pymysql.connect(host='db',user='root',password='pwd',db='nur')
@@ -75,9 +72,6 @@ try:
                 winner = i[5]
 
             member = json.loads(memberJson)
-            #for i in range(0,len(member)):
-               # tmp = urllib.parse.unquote(member[i])
-                #member[i] = tmp
                 
             get = json.loads(getJson)
             tableCard = json.loads(tableCardJson)
@@ -122,9 +116,6 @@ try:
             sendDic["winner"] = winner
             sendJson = json.dumps(sendDic)
             print(sendJson)
-
-            
-            
 
 finally:
     connection.close()

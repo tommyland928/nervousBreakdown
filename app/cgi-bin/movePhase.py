@@ -4,12 +4,12 @@ import sys
 import io
 import pymysql
 import random
-import string
 import datetime
 import os
 import json
 import urllib.parse
 import linemes
+import OperateDb
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 connection = pymysql.connect(host='db',user='root',password='pwd',db='nur')
@@ -25,6 +25,10 @@ if cookieString != "":
 else:
     cookieDic["name"] = ""
     cookieDic["sessid"] = ""
+
+operateDb = OperateDb.OperateDb()
+operateDb.renewSession(cookieDic["name"],cookieDic["sessid"])
+operateDb.removeNoSessionUser()
 
 
 #冒頭のhtmlメッセージのみ送信
@@ -148,7 +152,8 @@ try:
             member = json.loads(memberJson)
 
             get = json.loads(getJson)
-            if get[0]+get[1] == 24:
+            
+            if get[0]+get[1] == 24 or operateDb.checkIfTwoPeople():
                 #試合終了
                 #誰が勝ったかを教える
 
@@ -172,7 +177,7 @@ try:
                 cursor.execute(sql)
                 connection.commit()
                 
-                #roomsのphaseを0に戻す
+                #roomsのphaseは２
                 sql = "update rooms set phase=2"
                 cursor.execute(sql)
                 #usersのreadyを下げる

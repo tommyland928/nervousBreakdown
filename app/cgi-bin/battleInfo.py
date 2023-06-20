@@ -10,6 +10,12 @@ import json
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 connection = pymysql.connect(host='db',user='root',password='pwd',db='nur')
 
+"""
+ユーザからのリクエストに応じて盤面の情報をユーザに送る
+battle.jsと連携
+"""
+
+#cookieを確認,cookieDic["名前"]で値を参照
 cookieString = os.environ['HTTP_COOKIE']
 cookieDic = {}
 if cookieString != "":
@@ -37,6 +43,27 @@ try:
         for i in result:
             users.append(i[0])
             sessids.append(i[1])
+        
+        #同じセッションIDが無ければindexにリダイレクト
+        """
+        for i in result:
+            if cookieDic["name"] == i[0] and cookieDic["sessid"] == i[1]:
+                break
+        else:
+            html = <html>
+                <head>
+                    <meta charset='UTF-8'>
+                    <script>
+                        window.location.href = "/cgi-bin/index.py"
+                    </script>
+                </head>
+                <body>
+                </body>
+            </html>
+            
+            print(html)
+            sys.exit()
+            """
 
         sql = "select room,phase from rooms"
         cursor.execute(sql)
@@ -47,7 +74,7 @@ try:
             room = i[0]
             phase = i[1]
         
-        #phase=0の時にはまだ作られてない
+        #phase=0(試合前)の時にはまだデータベースから参照するものがないから、すべての値を初期化
         memberJson = ""
         turn = -1
         getJson = ""
@@ -59,7 +86,7 @@ try:
         sendOpenCard = [[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]]]
         openCard=[]
         winner = ""
-        if phase != 0:
+        if phase != 0: #試合後は上の初期化をデータベースの値で上書き
             sql = "select member,turn,get,tableCard,openCard,winner from battles"
             cursor.execute(sql)
             result = cursor.fetchall()
@@ -87,7 +114,7 @@ try:
                         sendOpenCard[i][j] = tableCard[i][j]
         #tablesも呼び出す
 
-        if phase == 0:
+        if phase == 0: #試合前に送るJSON
             #この時点ではまだbattlesレコードが作られてない
             sendDic = {}
             sendDic["member"] = []
@@ -97,7 +124,7 @@ try:
             sendDic["winner"] = ""
             sendJson = json.dumps(sendDic)
             print(sendJson)
-        if phase == 1:
+        if phase == 1: #試合中に送るJSON
             sendDic = {}
             sendDic["member"] = member
             sendDic["turn"] = turn 
@@ -107,7 +134,7 @@ try:
             sendJson = json.dumps(sendDic)
             print(sendJson)
         #phase=2の時はwinnerを渡す
-        if phase==2:
+        if phase==2: #試合後に送るJSON（正直phase==1の時との統合が可能）
             sendDic = {}
             sendDic["member"] = member
             sendDic["turn"] = turn 

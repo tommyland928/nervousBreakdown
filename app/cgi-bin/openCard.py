@@ -11,6 +11,12 @@ import json
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 connection = pymysql.connect(host='db',user='root',password='pwd',db='nur')
 
+"""
+試合中、クリックされたカードの座標情報の登録周りを担う
+ここで登録された情報を元にbattleInfo.pyで盤面の情報をユーザに送る
+"""
+
+#cookieを格納
 cookieString = os.environ['HTTP_COOKIE']
 cookieDic = {}
 if cookieString != "":
@@ -36,12 +42,13 @@ form = cgi.FieldStorage()
 row = int(form.getvalue('row'))
 column = int(form.getvalue('column'))
 
+
 try:
     with connection.cursor() as cursor:
 
         #まず正規のユーザかを確認
-        sql = f"select count(*) from users where name='{cookieDic['name']}' and sessid='{cookieDic['sessid']}'"
-        cursor.execute(sql)
+        sql = "select count(*) from users where name=%s and sessid=%s"
+        cursor.execute(sql,(cookieDic['name'],cookieDic['sessid']))
         result = cursor.fetchone()
         exist = result[0]
 

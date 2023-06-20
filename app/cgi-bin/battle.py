@@ -2,10 +2,35 @@
 
 import sys
 import io
+import pymysql
+import os 
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+connection = pymysql.connect(host='db',user='root',password='pwd',db='nur')
 
-#冒頭のhtmlメッセージのみ送信
+"""
+バトルの最初の画面
+キャッシュさせるためにこの時点ですべての画像を読み込ませる
+"""
+
+###
+
+
+#クッキーを見てusersに乗っていない場合にはindex.pyに遷移
+
+###
+#cookieを確認,cookieDic["名前"]で値を参照
+cookieString = os.environ['HTTP_COOKIE']
+cookieDic = {}
+if cookieString != "":
+    cookiesStringList = cookieString.split(';')
+    
+    for i in cookiesStringList:
+        tmp = i.split('=')
+        cookieDic[tmp[0].replace(' ','')] = tmp[1] 
+else:
+    cookieDic["name"] = ""
+    cookieDic["sessid"] = ""
 
 html = """Content-Type: text/html
 
@@ -122,9 +147,37 @@ html = """Content-Type: text/html
         <script src="/movePhase.js" defer></script>
 
     </body>
-
-
 </html>
 
 """
-print(html)
+
+
+try:
+    with connection.cursor() as cursor:
+        sql = "select name,sessid from users"
+        cursor.execute(sql)
+        result = cursor.fetchall()
+        names = []
+        sessids = []
+        for i in result:
+            if cookieDic["name"] == i[0] and cookieDic["sessid"] == i[1]:
+                #クッキーがあるから表示させる
+                print(html)
+                break
+        else:
+            html = """Content-Type: text/html
+
+            <html>
+                <head>
+                    <meta charset='UTF-8'>
+                    <script>
+                        window.location.href = "/cgi-bin/index.py"
+                    </script>
+                </head>
+                <body>
+                </body>
+            </html>
+            """
+            print(html)
+finally:
+    connection.close()

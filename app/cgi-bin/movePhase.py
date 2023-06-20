@@ -14,6 +14,15 @@ import OperateDb
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 connection = pymysql.connect(host='db',user='root',password='pwd',db='nur')
 
+"""
+試合前→試合中→試合後
+への遷移を司る実行ファイル
+movePhase.jsとの連携を使って定期的に実行させるようにしている
+が、定期的にユーザからのリクエストする実行ファイルを一つにするために
+battleInfo.pyの最初などに結合させても良い
+"""
+
+#cookieを取得
 cookieString = os.environ['HTTP_COOKIE']
 cookieDic = {}
 if cookieString != "":
@@ -27,8 +36,8 @@ else:
     cookieDic["sessid"] = ""
 
 operateDb = OperateDb.OperateDb()
-operateDb.renewSession(cookieDic["name"],cookieDic["sessid"])
-operateDb.removeNoSessionUser()
+operateDb.renewSession(cookieDic["name"],cookieDic["sessid"])#セッションを更新
+operateDb.removeNoSessionUser()#セッション切れのユーザを削除
 
 
 #冒頭のhtmlメッセージのみ送信
@@ -38,6 +47,9 @@ html = """Content-Type: text/html
 """
 print(html)
 
+#ランダムなカードを一枚返す[suit,num]
+#suit:1->spade,2->clover,3->heart,4->dia
+#num:1~13
 def randomCard():
     while True:
         suit = random.randint(1,4)
@@ -196,7 +208,7 @@ try:
 
                 #ラインにメッセージを送信　
                 #遊んでくれた時に自分にメッセージを送る
-                linemes.mes(member)
+                #linemes.mes(member)
 
 finally:
     connection.close()

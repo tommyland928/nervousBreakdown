@@ -4,6 +4,10 @@ import sys
 import io
 import pymysql
 
+"""
+データベースのリセット（デバッグ用）
+"""
+
 connection = pymysql.connect(host='db',user='root',password='pwd',db='nur')
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 print("Content-Type: text/html")

@@ -1,12 +1,8 @@
 document.querySelectorAll("img").forEach((imgElm) =>{
     imgElm.addEventListener('click',function(){
-        console.log(this.id);
         removeI = this.id.replace("i","");
         row = removeI.substr(0,1);
         column = removeI.substr(1,1);
-        
-        console.log(row);
-        console.log(column);
         
         const form = new FormData();
         form.append('row', row);

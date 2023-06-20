@@ -4,6 +4,11 @@ import json
 import urllib.parse
 import apikey
 
+"""
+lineにメッセージをline message APIを用いて送信する
+送信内容は、誰と誰が遊んでくれたかである。
+"""
+
 def mes(memberArg):
     url = 'https://api.line.me/v2/bot/message/broadcast'
     
@@ -27,12 +32,4 @@ def mes(memberArg):
     data = json.dumps(message_list)
     response = requests.post(url, headers=headers, data=data)
     return
-
-def main():
-    a = ["冨塚","富田"]
-    mes(a)
-
-
-if __name__ == "__main__":
-    main()
 

@@ -5,6 +5,11 @@ import io
 import pymysql
 import os
 
+"""
+readyボタンを押されたときの処理を記述
+ready.jsと連携
+この情報を元にmovePhase.pyにて試合前→試合中への遷移が行われる
+"""
 connection = pymysql.connect(host='db',user='root',password='pwd',db='nur')
 ###クッキー情報を辞書型に変換 cookieDic###
 cookieString = os.environ['HTTP_COOKIE']

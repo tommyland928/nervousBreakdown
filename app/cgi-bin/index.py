@@ -10,12 +10,19 @@ import cgitb
 
 cgitb.enable()
 
+"""
+最初のページ
+ユーザに名前を入力させる
+"""
+
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 connection = pymysql.connect(host='db',user='root',password='pwd',db='nur')
-operateDb = OperateDb.OperateDb()
-operateDb.removeNoSessionUser()
-operateDb.removeBattle()
 
+operateDb = OperateDb.OperateDb()
+operateDb.removeNoSessionUser()#セッション切れのユーザを削除
+operateDb.removeBattle()#全員がセッション切れになったバトルの削除
+
+#cookieを格納。cookieDic["名前"]でクッキーの参照が可能
 cookieString = os.environ['HTTP_COOKIE']
 cookieDic = {}
 if cookieString != "":
@@ -33,7 +40,7 @@ else:
 print("Content-Type: text/html")
 print()
 
-#セッション登録済みのものならばbattleサイトへ誘導
+
 try:
     with connection.cursor() as cursor:
         #member情報を格納
@@ -55,6 +62,7 @@ try:
             room = i[1]
             phase = i[2]
 
+        #セッション登録済みのものならばbattleサイトへ誘導
         for i in range(0,len(users)):
             if users[i] == cookieDic["name"] and sessids[i] == cookieDic["sessid"] and phase == 0:
                 html = """<html>
@@ -69,6 +77,7 @@ try:
                 </html>
                 """
                 print(html)
+        #セッションが登録済みではない場合
         else:
             html = """<html>
 	            <head>
@@ -77,17 +86,15 @@ try:
                 </head>
                 <body>
                     <div id="contents">
-                        <div id="flexbox">
-                            <h1>神経衰弱対戦</h1>
-                            <h2>名前を入力してください</h2>
-                            <div id="inputName">
-                                <form action="/cgi-bin/checkName.py" method="POST">
-                                    <input type="text" name="name"/>
-                                    <input type="submit" name="submit"/>
-                                </form>
-                            </div>
-                            <div id="test"></div>
+                        <h1>神経衰弱対戦</h1>
+                        <h2>名前を入力してください</h2>
+                        <div id="inputName">
+                            <form action="/cgi-bin/checkName.py" method="POST">
+                                <input type="text" name="name"/>
+                                <input type="submit" name="submit"/>
+                            </form>
                         </div>
+                        <div id="test"></div>
                     </div>
                 </body>
             </html>

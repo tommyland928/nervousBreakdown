@@ -11,6 +11,11 @@ import urllib.parse
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
+"""
+indexページで名前を入力されたときにその名前に重複がないかを確認する
+その後登録ができればバトルページへ遷移させる
+"""
+
 #払いだすクッキーを決定。名前一致が無ければ実際に払い出される
 sendCookie = ''
 number_of_strings = 5
@@ -28,6 +33,25 @@ connection = pymysql.connect(host='db',user='root',password='pwd',db='nur')
 #冒頭のhtmlメッセージのみ送信
 print("Content-Type: text/html")
 print()
+
+#入力に<+*-^\|が含まれていたらリダイレクト
+forbidden = ["-","^","\\","@","[",";",":","]",",",".","/","!","\"","#","$","%","&","'","(",")","=","~","|","`","{","+","*","}",">","?","<","_"]
+for i in formNameBeforeEncoding:
+  for j in forbidden:
+    if i==j:
+      html = """<html>
+        <head>
+          <meta charset='UTF-8'>
+          <script>
+              window.location.href = "/cgi-bin/battle.py"
+          </script>          
+        </head>
+        <body>
+        </body>
+      </html>
+      """
+      print(html)
+      sys.exit()
 
 try:
   with connection.cursor() as cursor:
@@ -51,7 +75,7 @@ try:
       users.append(i[1])
       sessids.append(i[2])
     
-    if phase != 0 and phase !=2:
+    if phase != 0 and phase !=2: #phase==1と同義。正直、試合中の入室規制もサーバーが強ければいらない。
       #試合中につき入室禁止
       html = """<body>
         battle has started already
@@ -77,8 +101,8 @@ try:
         JST = datetime.timezone(datetime.timedelta(hours=+9),'JST')
         JSTnow = datetime.datetime.now(JST)
         now = JSTnow.strftime("%Y-%m-%d %H:%M:%S")
-        sql = f"insert into users (name,sessid,ready,lastuse) values (%s,'{sendCookie}',0,'{now}')"
-        cursor.execute(sql,formName)
+        sql = f"insert into users (name,sessid,ready,lastuse) values (%s,%s,0,%s)"
+        cursor.execute(sql,(formName,sendCookie,now))
         connection.commit()
     
         #SSIDを払い出し

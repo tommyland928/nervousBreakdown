@@ -10,7 +10,6 @@ window.addEventListener('DOMContentLoaded', function(){
             //カードの画像を更新
             tableCard = data["tableCard"];
             if (befTableCard != tableCard.toString()){
-                console.log("do");
                 for (var i=0; i<4; i++){
                     for (var j=0; j<6; j++){
                         if (befTableCard[i][j] != tableCard[i][j].toString()){
@@ -68,21 +67,16 @@ window.addEventListener('DOMContentLoaded', function(){
 
 
             }
-
-
-
-
         })
         .catch(error => {
             console.log(error);
         })
-    }, 300);//msで指定　1000ms=1s
+    }, 500);//msで指定　1000ms=1s
 });
 
 
 const rotationAnimationLoop = (element, imagePath, deg) =>{
     if( deg <= 180 ){
-        console.log("kpokpeorkagarg")
         rotationAnimation(element, imagePath, deg);
         setTimeout( 
             () => {

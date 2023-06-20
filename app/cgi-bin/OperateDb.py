@@ -1,6 +1,11 @@
 import pymysql
 import datetime
 
+
+"""
+データベースを操作するための関数をまとめる
+"""
+
 class OperateDb:
     
     def removeNoSessionUser(self):
@@ -16,7 +21,7 @@ class OperateDb:
             now = datetime.datetime.strptime(nowStr,"%Y-%m-%d %H:%M:%S")
             for i in result:
                 deltaTime = now - i[1]
-                if deltaTime.seconds > 20:
+                if deltaTime.seconds > 15:
                     sql = f"delete from users where name='{i[0]}'"
                     self.cursor.execute(sql)
                     self.connection.commit()

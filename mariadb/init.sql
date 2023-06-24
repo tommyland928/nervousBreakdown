@@ -8,4 +8,3 @@ CREATE TABLE spades(room1 INT(3) NOT NULL);
 CREATE TABLE clovers(room1 INT(3) NOT NULL);
 CREATE TABLE hearts(room1 INT(3) NOT NULL);
 CREATE TABLE dias(room1 INT(3) NOT NULL);
-

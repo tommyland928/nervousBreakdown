@@ -1,23 +1,13 @@
 version: '3'
 services:
-  ner:
-    image: python:latest
-    restart: always
+  apache:
+    build: ./apache
     ports:
-      - 8000:8000
-    tty: true
+      - 8000:80
     volumes:
-      - ./app:/home/python/app
-    command: >
-      sh -c "
-      cd /home/python/app &&
-      pip install PyMySQL &&
-      pip install requests &&
-      python -m http.server --cgi
-      "
-
+      - ./www:/var/www
   db:
     build: ./mariadb
     environment:
       MYSQL_ROOT_PASSWORD: pwd
-      TZ: Asia/Tokyo
+  

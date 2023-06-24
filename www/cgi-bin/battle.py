@@ -48,36 +48,36 @@ html = """Content-Type: text/html
     <body>
         <div id="table">
             <div id="first">
-                <img src = "/img/reverse.png" id="i00">
-                <img src = "/img/reverse.png" id="i01">
-                <img src = "/img/reverse.png" id="i02">
-                <img src = "/img/reverse.png" id="i03">
-                <img src = "/img/reverse.png" id="i04">
-                <img src = "/img/reverse.png" id="i05">
+                <img src = "/reverseImg/reverse.png" id="i00">
+                <img src = "/reverseImg/reverse.png" id="i01">
+                <img src = "/reverseImg/reverse.png" id="i02">
+                <img src = "/reverseImg/reverse.png" id="i03">
+                <img src = "/reverseImg/reverse.png" id="i04">
+                <img src = "/reverseImg/reverse.png" id="i05">
             </div>
             <div id="second">
-                <img src = "/img/reverse.png" id="i10">
-                <img src = "/img/reverse.png" id="i11">
-                <img src = "/img/reverse.png" id="i12">
-                <img src = "/img/reverse.png" id="i13">
-                <img src = "/img/reverse.png" id="i14">
-                <img src = "/img/reverse.png" id="i15">
+                <img src = "/reverseImg/reverse.png" id="i10">
+                <img src = "/reverseImg/reverse.png" id="i11">
+                <img src = "/reverseImg/reverse.png" id="i12">
+                <img src = "/reverseImg/reverse.png" id="i13">
+                <img src = "/reverseImg/reverse.png" id="i14">
+                <img src = "/reverseImg/reverse.png" id="i15">
             </div>
             <div id="third">
-                <img src = "/img/reverse.png" id="i20">
-                <img src = "/img/reverse.png" id="i21">
-                <img src = "/img/reverse.png" id="i22">
-                <img src = "/img/reverse.png" id="i23">
-                <img src = "/img/reverse.png" id="i24">
-                <img src = "/img/reverse.png" id="i25">
+                <img src = "/reverseImg/reverse.png" id="i20">
+                <img src = "/reverseImg/reverse.png" id="i21">
+                <img src = "/reverseImg/reverse.png" id="i22">
+                <img src = "/reverseImg/reverse.png" id="i23">
+                <img src = "/reverseImg/reverse.png" id="i24">
+                <img src = "/reverseImg/reverse.png" id="i25">
             </div>
             <div id="forth">
-                <img src = "/img/reverse.png" id="i30">
-                <img src = "/img/reverse.png" id="i31">
-                <img src = "/img/reverse.png" id="i32">
-                <img src = "/img/reverse.png" id="i33">
-                <img src = "/img/reverse.png" id="i34">
-                <img src = "/img/reverse.png" id="i35">
+                <img src = "/reverseImg/reverse.png" id="i30">
+                <img src = "/reverseImg/reverse.png" id="i31">
+                <img src = "/reverseImg/reverse.png" id="i32">
+                <img src = "/reverseImg/reverse.png" id="i33">
+                <img src = "/reverseImg/reverse.png" id="i34">
+                <img src = "/reverseImg/reverse.png" id="i35">
             </div>
             <div id="score"></div>
             

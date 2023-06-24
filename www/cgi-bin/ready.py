@@ -55,8 +55,10 @@ try:
             sessid = i[2]
             ready = i[3]
         
-            
-        if ready == 0: 
+        sql = "select count(*) from users where ready=1"
+        cursor.execute(sql)
+        result = cursor.fetchone()
+        if ready == 0 and result[0] <= 1: 
             sql = f"UPDATE users SET ready=1 WHERE name='{cookieDic['name']}' AND sessid='{cookieDic['sessid']}'"
             cursor.execute(sql)
             connection.commit()

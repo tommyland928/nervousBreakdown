@@ -75,52 +75,44 @@ try:
       users.append(i[1])
       sessids.append(i[2])
     
-    if phase != 0 and phase !=2: #phase==1と同義。正直、試合中の入室規制もサーバーが強ければいらない。
-      #試合中につき入室禁止
-      html = """<body>
-        battle has started already
-      </body>
-      """
-      print(html)
-    else:#試合前
-      for i in users:#既に存在していないか
-        if i == formName:#一致していた時
-          html = """<html>
-            <head>
-              <meta charset="utf-8">
-            </html>
-            <body>
-              exist
-            </body>
-          </html>
-          """
-          print(html)
-          break
-      else:#一致が無かったとき
-        #データベースに登録
-        JST = datetime.timezone(datetime.timedelta(hours=+9),'JST')
-        JSTnow = datetime.datetime.now(JST)
-        now = JSTnow.strftime("%Y-%m-%d %H:%M:%S")
-        sql = f"insert into users (name,sessid,ready,lastuse) values (%s,%s,0,%s)"
-        cursor.execute(sql,(formName,sendCookie,now))
-        connection.commit()
-    
-        #SSIDを払い出し
-        html = f"""<html>
+    for i in users:#既に存在していないか
+      if i == formName:#一致していた時
+        html = """<html>
           <head>
             <meta charset="utf-8">
-            <script>
-              document.cookie = 'name={formName}; path=/;'
-              document.cookie = 'sessid={sendCookie}; path=/;'
-              window.location.href = '/cgi-bin/battle.py';
-            </script>
-          </head>
+          </html>
           <body>
-            登録完了
+            exist
           </body>
         </html>
         """
         print(html)
+        break
+    else:#一致が無かったとき
+      #データベースに登録
+      JST = datetime.timezone(datetime.timedelta(hours=+9),'JST')
+      JSTnow = datetime.datetime.now(JST)
+      now = JSTnow.strftime("%Y-%m-%d %H:%M:%S")
+      sql = f"insert into users (name,sessid,ready,lastuse) values (%s,%s,0,%s)"
+      cursor.execute(sql,(formName,sendCookie,now))
+      connection.commit()
+  
+      #SSIDを払い出し
+      html = f"""<html>
+        <head>
+          <meta charset="utf-8">
+          <script>
+            document.cookie = 'name={formName}; path=/;'
+            document.cookie = 'sessid={sendCookie}; path=/;'
+            window.location.href = '/cgi-bin/battle.py';
+          </script>
+        </head>
+        <body>
+          登録完了
+        </body>
+      </html>
+      """
+      print(html)
 
 
 finally:

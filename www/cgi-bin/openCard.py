@@ -84,6 +84,12 @@ try:
         
         selectedCard = tableCard[row][column]
         turnName = member[turn]
+        anotherTurnName = ""
+        for i in member:
+            if i != turnName:
+                anotherTurnName = i
+                break
+        
         if exist == 1 and cookieDic["name"] == turnName and selectedCard[0] != -1 and openCardNum < 2:#正規のユーザであり　かつ　順番の人 かつ　選ばれたカードが背景画像じゃない　かつ　オープンされたカードが二枚より少ない
             
             #同じところをクリっくしていたら無効
@@ -128,7 +134,7 @@ try:
 
                 
                 
-        elif exist == 1 and cookieDic["name"] != turnName and selectedCard[0] != -1 and openCardNum == 2:#相手のターンかつ二枚選ばれてるときは自分のターン
+        elif exist == 1 and cookieDic["name"] == anotherTurnName and selectedCard[0] != -1 and openCardNum == 2:#相手のターンかつ二枚選ばれてるときは自分のターン
             #自分のターンにする
             if turn == 0:
                 turn = 1
